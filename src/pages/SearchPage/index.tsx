@@ -1,6 +1,6 @@
 import { Container } from "./style";
 
-export function SearchPage() { 
+export function SearchPage() {
   return (
     <Container>
       <h1>SearchPage</h1>
