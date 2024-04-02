@@ -24,39 +24,50 @@ export function Details() {
           </button>
 
           <div className="pokemonImage">
-            <img src={data.sprites.other["official-artwork"].front_default  || pokeball} alt={data.name} />
+            <img
+              src={
+                data.sprites.other["official-artwork"].front_default || pokeball
+              }
+              alt={data.name}
+            />
           </div>
 
           <div className="boxStatus">
             <strong>
               #{data.id} {data.name[0].toUpperCase() + data.name.substring(1)}
             </strong>
+
+            <div className="sizePokemon">
+              <span>Heigth: {data.height}0cm</span>
+              <span>Weigth: {data.weight / 10}kg</span>
+            </div>
+
+            <div className="boxTypes">
+              {data.types.map((type) => {
+                return (
+                  <CardType
+                    key={type.type.name}
+                    type={type.type.name}
+                    size={16}
+                  />
+                );
+              })}
+            </div>
           </div>
 
-          <div className="sizePokemon">
-            <span>Heigth: {data.height}0cm</span>
-            <span>Weigth: {data.weight/10}kg</span>
+          <div className="boxStats">
+            {data.stats.map((stat) => {
+              return (
+                <div className="stats">
+                  <span className="statsName">{stat.stat.name}</span>
+
+                  <progress max={200} value={stat.base_stat} />
+
+                  <span className="statsValue">{stat.base_stat}</span>
+                </div>
+              );
+            })}
           </div>
-
-        <div className="boxTypes">
-          {data.types.map((type) => {
-            return <CardType key={type.type.name} type={type.type.name} size={16}/>
-          })}
-        </div>
-
-        <div className="boxStats">
-          {data.stats.map((stat) => {
-            return (
-              <div className="stats">
-                <span className="statsName">{stat.stat.name}</span>
-                
-                <progress max={200} value={stat.base_stat}/>
-
-                <span className="statsValue">{stat.base_stat}</span>
-              </div>
-            )
-          })}
-        </div>
         </div>
       )}
     </Container>
