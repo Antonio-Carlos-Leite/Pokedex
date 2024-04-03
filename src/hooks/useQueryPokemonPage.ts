@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { API } from "../configs/api";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Pokemon } from "../@types/pokemon";
-import { useNavigate, useSearchParams } from "react-router-dom";
 
 export function useQueryPokemonPage() {
   const [page, setPage] = useState(1);
@@ -35,14 +35,14 @@ export function useQueryPokemonPage() {
 
   function nextPage() {
     if (page < totalPages) {
-      setPage((value) => value + 1);
+      setPage((prevPage) => prevPage + 1);
       navigate(`?page=${page + 1}`);
     }
   }
 
   function prevPage() {
     if (page > 1) {
-      setPage((value) => value - 1);
+      setPage((prevPage) => prevPage - 1);
       navigate(`?page=${page - 1}`);
     }
   }
@@ -64,10 +64,10 @@ export function useQueryPokemonPage() {
         return;
       }
     }
-  }, [page, navigate, searchParams, totalPages]);
+  }, [page, totalPages, searchParams, navigate]);
 
   const query = useQuery({
-    queryKey: [`getPokemonPage${page}-${limit}`, page, limit],
+    queryKey: [`getPokemonPage`, page, limit],
     queryFn: () => getPokemonPage({ page, limit }),
   });
 

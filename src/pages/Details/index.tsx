@@ -1,33 +1,35 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { Container } from "./style";
 import { useQueryPokemonDetails } from "../../hooks/useQueryPokemonDetails";
+import { Container } from "./style";
+import { TypeCard } from "../../components/TypeCard";
 import pokeball from "../../assets/pokeball.png";
-import { CardType } from "../../components/CardType";
+import { useEffect } from "react";
+
 export function Details() {
   const { name } = useParams();
   const { data, isLoading, error } = useQueryPokemonDetails(name!);
-
   const navigate = useNavigate();
 
-  if (error) console.log(error);
+  if (error) console.error(error);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, []);
 
   return (
     <Container>
       {isLoading && <span className="loading">Loading...</span>}
-
       {!isLoading && error && <span className="loading">Error...</span>}
 
       {data && (
         <div className="boxDetails">
-          <button className="buttonBackPage" onClick={() => navigate(-1)}>
-            &lt;voltar
+          <button onClick={() => navigate(-1)} className="backPageButton">
+            &lt; voltar
           </button>
 
           <div className="pokemonImage">
             <img
-              src={
-                data.sprites.other["official-artwork"].front_default || pokeball
-              }
+              src={data.sprites.other["official-artwork"].front_default || pokeball}
               alt={data.name}
             />
           </div>
@@ -38,32 +40,24 @@ export function Details() {
             </strong>
 
             <div className="sizePokemon">
-              <span>Heigth: {data.height}0cm</span>
-              <span>Weigth: {data.weight / 10}kg</span>
+              <span>Height: {data.height}0cm</span>
+              <span>Weight: {data.weight / 10}kg</span>
             </div>
 
             <div className="boxTypes">
               {data.types.map((type) => {
-                return (
-                  <CardType
-                    key={type.type.name}
-                    type={type.type.name}
-                    size={16}
-                  />
-                );
+                return <TypeCard key={type.type.name} type={type.type.name} size={16} />;
               })}
             </div>
           </div>
 
           <div className="boxStats">
-            {data.stats.map((stat) => {
+            {data.stats?.map((stat) => {
               return (
-                <div className="stats">
-                  <span className="statsName">{stat.stat.name}</span>
-
+                <div key={stat.stat.name} className="stats">
+                  <span className="statName">{stat.stat.name}</span>
                   <progress max={200} value={stat.base_stat} />
-
-                  <span className="statsValue">{stat.base_stat}</span>
+                  <span className="statValue">{stat.base_stat}</span>
                 </div>
               );
             })}

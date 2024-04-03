@@ -1,21 +1,27 @@
 import { createGlobalStyle } from "styled-components";
 
-export const Reset = createGlobalStyle`
+export const GlobalStyles = createGlobalStyle`
   :root {
     font-size: 62.5%;
     scroll-behavior: smooth;
   }
-
+  
   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    
     font-size: 1.6rem;
-    border: none;
     color: ${({ theme }) => theme.colors.dark};
+    border: transparent;
     font-family: sans-serif;
+    
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
-
+    
   button {
     background: none;
     cursor: pointer;
@@ -32,7 +38,7 @@ export const Reset = createGlobalStyle`
     margin: -0.1rem;
     border-width: 0;
     overflow: hidden;
-    color: transparent;
+    color: transparent;    
     clip: rect(0, 0, 0, 0);
   }
 
@@ -57,7 +63,7 @@ export const Reset = createGlobalStyle`
 
   @media (min-width: 768px) {
     .loading {
-      font-size: 2rem;
-    }
+      font-size: 2.0rem;
+    } 
   }
 `;

@@ -12,5 +12,6 @@ export const Container = styled.span<TypeProps>`
 
   @media (min-width: 768px) {
     font-size: ${({ size }) => (size! + 4) / 10}rem;
+    padding: 0.6rem 1.2rem;
   }
 `;
